@@ -1,0 +1,1396 @@
+/* =====================================================
+   VELMONT — PÁGINA DA COLEÇÃO
+   (usa style.css como base: reset, header, fontes)
+===================================================== */
+
+body.catalog-page {
+    --cat-bg: #0e1a2d;
+    --page-bg: #f8f7f4;
+
+    background: var(--page-bg);
+}
+
+.visually-hidden {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    overflow: hidden;
+
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+/* o header começa sobre o topo escuro */
+.catalog-page .header:not(.on-light) .logo-word {
+    color: #fff;
+}
+
+.catalog-page .header:not(.on-light) .main-nav a {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.catalog-page .header:not(.on-light) .main-nav a:hover {
+    color: #fff;
+}
+
+.catalog-page .header:not(.on-light) .main-nav a::after {
+    background: #fff;
+}
+
+/* =====================================================
+   BOTÃO "PÍLULA"
+===================================================== */
+
+.pill-button {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 16px 30px;
+
+    border-radius: 999px;
+
+    background: #111;
+    color: #f8f7f4;
+
+    font-size: 10px;
+    font-weight: 500;
+
+    letter-spacing: 3px;
+
+    text-decoration: none;
+
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.16);
+
+    transition:
+        transform 0.4s var(--ease-out),
+        box-shadow 0.4s ease;
+}
+
+.pill-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.24);
+}
+
+/* =====================================================
+   TOPO DA COLEÇÃO
+===================================================== */
+
+.catalog-hero {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 150px 6vw 120px;
+
+    background-color: var(--cat-bg);
+    color: #fff;
+
+    text-align: center;
+
+    overflow: hidden;
+}
+
+.catalog-hero::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background: radial-gradient(
+        circle at 50% 40%,
+        rgba(255, 255, 255, 0.1),
+        transparent 60%
+    );
+
+    pointer-events: none;
+}
+
+.catalog-wave {
+    position: absolute;
+
+    left: 0;
+    bottom: -1px;
+
+    width: 100%;
+    height: 90px;
+
+    fill: var(--page-bg);
+}
+
+.back-link {
+    position: absolute;
+
+    left: 6vw;
+    top: 150px;
+
+    display: inline-flex;
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: 9px;
+    letter-spacing: 3px;
+
+    color: rgba(255, 255, 255, 0.7);
+
+    text-decoration: none;
+
+    transition: color 0.3s ease;
+
+    z-index: 2;
+}
+
+.back-link span {
+    transition: transform 0.4s var(--ease-out);
+}
+
+.back-link:hover {
+    color: #fff;
+}
+
+.back-link:hover span {
+    transform: translateX(-4px);
+}
+
+.catalog-eyebrow {
+    position: relative;
+
+    font-size: 9px;
+    letter-spacing: 5px;
+
+    color: rgba(255, 255, 255, 0.6);
+
+    transition:
+        opacity 1s var(--ease-out) 0.3s,
+        transform 1s var(--ease-out) 0.3s;
+}
+
+.catalog-title {
+    position: relative;
+
+    display: flex;
+
+    margin-top: 10px;
+
+    font-family: "Anton", "Impact", sans-serif;
+    font-size: clamp(80px, 16vw, 240px);
+    font-weight: 400;
+
+    line-height: 0.95;
+    letter-spacing: 0.01em;
+
+    overflow: hidden;
+}
+
+.catalog-title span {
+    display: inline-block;
+
+    transition: transform 1.1s var(--ease-out);
+    transition-delay: calc(0.3s + var(--i) * 45ms);
+}
+
+.catalog-tagline {
+    position: relative;
+
+    margin-top: 16px;
+
+    font-size: 9px;
+    letter-spacing: 6px;
+
+    color: rgba(255, 255, 255, 0.6);
+
+    transition:
+        opacity 1s var(--ease-out) 0.8s,
+        transform 1s var(--ease-out) 0.8s;
+}
+
+.is-loading .catalog-eyebrow,
+.is-loading .catalog-tagline {
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+.is-loading .catalog-title span {
+    transform: translateY(105%);
+}
+
+/* =====================================================
+   CORPO
+===================================================== */
+
+.catalog-body {
+    padding: 20px 6vw 0;
+}
+
+/* =====================================================
+   CATEGORIAS + BUSCA
+===================================================== */
+
+.catalog-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    gap: 18px;
+}
+
+.catalog-cats {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 8px;
+}
+
+.catalog-cats a {
+    padding: 10px 18px;
+
+    border: 1px solid rgba(0, 0, 0, 0.14);
+    border-radius: 999px;
+
+    font-size: 9px;
+    letter-spacing: 2.5px;
+
+    color: #555;
+
+    text-decoration: none;
+
+    transition:
+        color 0.3s ease,
+        background 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.catalog-cats a:hover {
+    border-color: #111;
+    color: #111;
+}
+
+.catalog-cats a.active {
+    background: var(--cat-bg);
+    border-color: var(--cat-bg);
+    color: #fff;
+}
+
+.catalog-search {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    width: min(320px, 100%);
+
+    padding: 11px 18px;
+
+    border: 1px solid rgba(0, 0, 0, 0.14);
+    border-radius: 999px;
+
+    background: #fff;
+
+    color: #777;
+
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.catalog-search:focus-within {
+    border-color: #111;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+
+    color: #111;
+}
+
+.catalog-search svg {
+    flex: 0 0 18px;
+
+    width: 18px;
+    height: 18px;
+}
+
+.catalog-search input {
+    flex: 1;
+
+    min-width: 0;
+
+    border: 0;
+    outline: 0;
+
+    background: transparent;
+
+    font-family: inherit;
+    font-size: 13px;
+
+    color: #111;
+}
+
+.catalog-search input::placeholder {
+    color: #9a968f;
+}
+
+/* =====================================================
+   FILTROS + CONTAGEM
+===================================================== */
+
+.catalog-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 16px;
+
+    min-height: 30px;
+
+    margin-top: 40px;
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.catalog-filters {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 22px;
+}
+
+.catalog-filters button {
+    position: relative;
+
+    padding: 4px 0;
+
+    border: 0;
+    background: none;
+
+    font-family: inherit;
+    font-size: 9px;
+    letter-spacing: 3px;
+
+    color: #8a867f;
+
+    cursor: pointer;
+
+    transition: color 0.3s ease;
+}
+
+.catalog-filters button::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: -4px;
+
+    width: 100%;
+    height: 1px;
+
+    background: #111;
+
+    transform: scaleX(0);
+    transform-origin: left;
+
+    transition: transform 0.4s var(--ease-out);
+}
+
+.catalog-filters button:hover,
+.catalog-filters button.active {
+    color: #111;
+}
+
+.catalog-filters button.active::after {
+    transform: scaleX(1);
+}
+
+.catalog-count {
+    font-size: 9px;
+    letter-spacing: 3px;
+
+    color: #8a867f;
+}
+
+/* =====================================================
+   GRADE DE PRODUTOS
+===================================================== */
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+
+    gap: 56px 2.4vw;
+
+    margin-top: 48px;
+}
+
+.product-card {
+    opacity: 0;
+    transform: translateY(40px);
+
+    transition:
+        opacity 0.9s var(--ease-out),
+        transform 1.1s var(--ease-out);
+
+    transition-delay: calc(var(--i) * 70ms);
+}
+
+.product-card.is-in {
+    opacity: 1;
+    transform: none;
+}
+
+.product-grid.leaving .product-card {
+    opacity: 0;
+    transform: translateY(16px);
+
+    transition-duration: 0.25s;
+    transition-delay: 0s;
+}
+
+.product-media {
+    position: relative;
+
+    display: grid;
+    place-items: center;
+
+    width: 100%;
+    aspect-ratio: 4 / 5;
+
+    padding: 0;
+
+    overflow: hidden;
+
+    border: 0;
+    border-radius: 10px;
+
+    background: #efede8;
+
+    cursor: pointer;
+}
+
+.product-media::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background: radial-gradient(
+        circle at var(--mx, 50%) var(--my, 40%),
+        rgba(255, 255, 255, 0.9),
+        transparent 55%
+    );
+
+    opacity: 0;
+
+    transition: opacity 0.5s ease;
+}
+
+.product-media:hover::before {
+    opacity: 1;
+}
+
+.product-media img {
+    position: relative;
+
+    width: 78%;
+    height: 82%;
+
+    object-fit: contain;
+
+    filter: drop-shadow(0 24px 22px rgba(0, 0, 0, 0.16));
+
+    transition: transform 0.9s var(--ease-out);
+}
+
+.product-media:hover img {
+    transform: translateY(-8px) scale(1.04);
+}
+
+.product-media model-viewer {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    background: transparent;
+
+    --poster-color: transparent;
+    --progress-bar-color: transparent;
+
+    pointer-events: none;
+}
+
+.product-badge {
+    position: absolute;
+
+    left: 14px;
+    top: 14px;
+
+    padding: 6px 10px;
+
+    border-radius: 999px;
+
+    background: #111;
+    color: #f8f7f4;
+
+    font-size: 7px;
+    letter-spacing: 2px;
+}
+
+.product-3d {
+    position: absolute;
+
+    right: 14px;
+    top: 14px;
+
+    padding: 6px 10px;
+
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 999px;
+
+    font-size: 7px;
+    letter-spacing: 2px;
+
+    color: #333;
+}
+
+.product-quick {
+    position: absolute;
+
+    left: 14px;
+    right: 14px;
+    bottom: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    padding: 13px;
+
+    border-radius: 999px;
+
+    background: rgba(17, 17, 17, 0.85);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+
+    font-size: 8px;
+    letter-spacing: 3px;
+
+    color: #fff;
+
+    opacity: 0;
+    transform: translateY(12px);
+
+    transition:
+        opacity 0.4s ease,
+        transform 0.4s var(--ease-out);
+}
+
+.product-quick svg {
+    width: 12px;
+    height: 12px;
+}
+
+.product-media:hover .product-quick,
+.product-media:focus-visible .product-quick {
+    opacity: 1;
+    transform: none;
+}
+
+.product-info {
+    display: flex;
+    flex-direction: column;
+
+    gap: 6px;
+
+    margin-top: 16px;
+}
+
+.product-brand {
+    font-size: 8px;
+    letter-spacing: 3px;
+
+    color: #8a867f;
+}
+
+.product-name {
+    font-size: 14px;
+    font-weight: 400;
+
+    letter-spacing: -0.01em;
+}
+
+.product-name mark {
+    background: rgba(255, 214, 0, 0.45);
+    color: inherit;
+}
+
+.product-price {
+    font-size: 9px;
+    letter-spacing: 2.5px;
+
+    color: #555;
+}
+
+/* =====================================================
+   SEM ITENS / SEM RESULTADOS
+===================================================== */
+
+.catalog-empty[hidden] {
+    display: none;
+}
+
+.catalog-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 18px;
+
+    padding: 12vh 0;
+
+    text-align: center;
+}
+
+.catalog-empty strong {
+    font-family: "Anton", "Impact", sans-serif;
+    font-size: 64px;
+    font-weight: 400;
+
+    letter-spacing: 2px;
+}
+
+.catalog-empty p {
+    font-size: 13px;
+
+    color: #6f6b65;
+}
+
+/* =====================================================
+   REELS — DETALHES DAS PEÇAS
+===================================================== */
+
+.reels {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 2000;
+}
+
+.reels[hidden] {
+    display: none;
+}
+
+.reels-backdrop {
+    position: absolute;
+    inset: 0;
+
+    background: rgba(10, 10, 12, 0.82);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+
+    animation: reelsFade 0.4s ease;
+}
+
+@keyframes reelsFade {
+    from {
+        opacity: 0;
+    }
+}
+
+/* computador: coluna vertical no formato de celular */
+.reels-frame {
+    position: relative;
+
+    height: min(92vh, 900px);
+    aspect-ratio: 9 / 16;
+
+    overflow: hidden;
+
+    border-radius: 20px;
+
+    background: #000;
+
+    box-shadow: 0 40px 120px rgba(0, 0, 0, 0.5);
+
+    animation: reelsIn 0.55s var(--ease-out);
+}
+
+@keyframes reelsIn {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.97);
+    }
+}
+
+.reels-top {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    top: 0;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: calc(16px + env(safe-area-inset-top, 0px)) 16px 16px;
+
+    background: linear-gradient(rgba(0, 0, 0, 0.45), transparent);
+
+    color: #fff;
+
+    pointer-events: none;
+
+    z-index: 5;
+}
+
+.reels-count {
+    font-size: 9px;
+    letter-spacing: 3px;
+}
+
+.reels-close {
+    display: grid;
+    place-items: center;
+
+    width: 38px;
+    height: 38px;
+
+    border: 0;
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.16);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+
+    color: #fff;
+
+    cursor: pointer;
+
+    pointer-events: auto;
+}
+
+.reels-close svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* feed com "encaixe" em cada peça, como TikTok/Reels */
+.reels-feed {
+    height: 100%;
+
+    overflow-y: auto;
+
+    scroll-snap-type: y mandatory;
+    overscroll-behavior: contain;
+
+    scrollbar-width: none;
+}
+
+.reels-feed::-webkit-scrollbar {
+    display: none;
+}
+
+.reel {
+    position: relative;
+
+    height: 100%;
+
+    overflow: hidden;
+
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+
+    background:
+        radial-gradient(circle at 50% 38%, rgba(255, 255, 255, 0.16), transparent 60%),
+        var(--reel-bg, #1a1a1a);
+
+    color: #fff;
+}
+
+.reel-media {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    top: 8%;
+    bottom: 33%;
+
+    display: grid;
+    place-items: center;
+}
+
+.reel-media img {
+    width: 86%;
+    height: 100%;
+
+    object-fit: contain;
+
+    filter: drop-shadow(0 30px 30px rgba(0, 0, 0, 0.4));
+
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+/* leve zoom na peça ativa (efeito "Ken Burns") */
+.reel.active .reel-media img {
+    animation: reelZoom 9s ease-out forwards;
+}
+
+@keyframes reelZoom {
+    from {
+        transform: scale(0.94);
+    }
+
+    to {
+        transform: scale(1.04);
+    }
+}
+
+.reel-media model-viewer {
+    width: 100%;
+    height: 100%;
+
+    background: transparent;
+
+    --poster-color: transparent;
+    --progress-bar-color: transparent;
+}
+
+.reel-shade {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 45%;
+
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+
+    pointer-events: none;
+}
+
+.reel-info {
+    position: absolute;
+
+    left: 20px;
+    right: 84px;
+    bottom: calc(26px + env(safe-area-inset-bottom, 0px));
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 8px;
+}
+
+.reel-brand {
+    font-size: 9px;
+    letter-spacing: 4px;
+
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.reel-name {
+    font-size: 22px;
+    font-weight: 400;
+
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+}
+
+.reel-price {
+    font-size: 9px;
+    letter-spacing: 3px;
+
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.reel-cta {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 8px;
+    padding: 13px 22px;
+
+    border: 0;
+    border-radius: 999px;
+
+    background: #fff;
+    color: #111;
+
+    font-family: inherit;
+    font-size: 9px;
+    font-weight: 600;
+
+    letter-spacing: 2.5px;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.3s var(--ease-out),
+        background 0.3s ease,
+        color 0.3s ease;
+}
+
+.reel-cta:hover {
+    transform: translateY(-2px);
+}
+
+.reel-cta svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* confirmação depois de adicionar */
+.reel-cta.added {
+    background: #1f9d55;
+    color: #fff;
+}
+
+/* =====================================================
+   CORES DO ITEM (variações)
+===================================================== */
+
+.reel-variants {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+
+    margin-top: 4px;
+}
+
+.reel-variant-label {
+    font-size: 8px;
+    letter-spacing: 3px;
+
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.reel-variant-label b {
+    font-weight: 600;
+
+    color: #fff;
+}
+
+.reel-swatches {
+    display: flex;
+
+    gap: 10px;
+}
+
+.reel-swatch {
+    width: 28px;
+    height: 28px;
+
+    padding: 0;
+
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+
+    background: var(--swatch);
+
+    box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.25);
+
+    cursor: pointer;
+
+    transition:
+        transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+        border-color 0.3s ease;
+}
+
+.reel-swatch:hover {
+    transform: scale(1.1);
+}
+
+.reel-swatch.active {
+    border-color: #fff;
+    transform: scale(1.12);
+}
+
+/* troca suave da foto ao mudar de cor */
+.reel-media img {
+    transition:
+        opacity 0.18s ease,
+        filter 0.18s ease;
+}
+
+.reel-media img.swapping {
+    opacity: 0;
+    filter: blur(6px);
+}
+
+.reel-credit {
+    font-size: 7px;
+    letter-spacing: 0.5px;
+
+    color: rgba(255, 255, 255, 0.45);
+}
+
+/* bolinhas de cor na grade */
+.product-swatches {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 5px;
+
+    margin-top: 2px;
+
+    font-size: 8px;
+    letter-spacing: 2px;
+
+    color: #8a867f;
+}
+
+.product-swatches i {
+    width: 11px;
+    height: 11px;
+
+    border: 1px solid rgba(0, 0, 0, 0.18);
+    border-radius: 50%;
+}
+
+.product-swatches i:last-of-type {
+    margin-right: 4px;
+}
+
+/* botões laterais (curtir, enviar, coleção) */
+.reel-actions {
+    position: absolute;
+
+    right: 14px;
+    bottom: calc(34px + env(safe-area-inset-bottom, 0px));
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 18px;
+}
+
+.reel-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 0;
+
+    border: 0;
+    background: none;
+
+    font-family: inherit;
+    font-size: 8px;
+    letter-spacing: 1px;
+
+    color: #fff;
+
+    text-decoration: none;
+
+    cursor: pointer;
+}
+
+.reel-action-icon {
+    display: grid;
+    place-items: center;
+
+    width: 46px;
+    height: 46px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.14);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+
+    transition:
+        transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+        background 0.3s ease;
+}
+
+.reel-action:hover .reel-action-icon {
+    background: rgba(255, 255, 255, 0.24);
+}
+
+.reel-action svg {
+    width: 22px;
+    height: 22px;
+}
+
+.reel-action.liked .reel-action-icon {
+    transform: scale(1.12);
+    color: #ff3b5c;
+}
+
+.reel-action.liked svg path {
+    fill: currentColor;
+}
+
+/* coração grande ao dar dois cliques/toques */
+.reel-heart {
+    position: absolute;
+
+    left: 50%;
+    top: 40%;
+
+    width: 110px;
+    height: 110px;
+
+    color: #ff3b5c;
+
+    translate: -50% -50%;
+
+    pointer-events: none;
+
+    animation: reelHeart 0.9s var(--ease-out) forwards;
+
+    z-index: 4;
+}
+
+@keyframes reelHeart {
+    0% {
+        opacity: 0;
+        transform: scale(0.3) rotate(-12deg);
+    }
+
+    25% {
+        opacity: 1;
+        transform: scale(1.15) rotate(-6deg);
+    }
+
+    45% {
+        transform: scale(0.95) rotate(0deg);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.05) translateY(-40px);
+    }
+}
+
+/* dica no primeiro item */
+.reel-swipe {
+    position: absolute;
+
+    left: 50%;
+    bottom: 37%;
+
+    translate: -50% 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 6px;
+
+    font-size: 8px;
+    letter-spacing: 3px;
+
+    color: rgba(255, 255, 255, 0.8);
+
+    animation: reelSwipe 1.8s ease-in-out infinite;
+
+    pointer-events: none;
+}
+
+.reel-swipe svg {
+    width: 18px;
+    height: 18px;
+}
+
+@keyframes reelSwipe {
+    0%,
+    100% {
+        transform: translateY(0);
+        opacity: 0.6;
+    }
+
+    50% {
+        transform: translateY(-10px);
+        opacity: 1;
+    }
+}
+
+/* setas ao lado do feed (computador) */
+.reels-nav {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+
+    margin-left: 24px;
+}
+
+.reels-nav button {
+    display: grid;
+    place-items: center;
+
+    width: 48px;
+    height: 48px;
+
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.08);
+
+    color: #fff;
+
+    cursor: pointer;
+
+    transition:
+        background 0.3s ease,
+        opacity 0.3s ease;
+}
+
+.reels-nav button:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.reels-nav button:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
+.reels-nav svg {
+    width: 20px;
+    height: 20px;
+}
+
+.reels-toast {
+    position: absolute;
+
+    left: 50%;
+    bottom: 40px;
+
+    translate: -50% 0;
+
+    padding: 12px 20px;
+
+    border-radius: 999px;
+
+    background: #fff;
+    color: #111;
+
+    font-size: 10px;
+    letter-spacing: 2px;
+
+    animation: reelsFade 0.3s ease;
+
+    z-index: 10;
+}
+
+/* =====================================================
+   RODAPÉ
+===================================================== */
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 800px) {
+
+    .catalog-hero {
+        padding: 138px 25px 90px;
+    }
+
+    .back-link {
+        left: 25px;
+        top: 100px;
+    }
+
+    /* nome da categoria sempre cabe na largura da tela */
+    .catalog-title {
+        font-size: clamp(48px, 17vw, 96px);
+    }
+
+    .catalog-empty strong {
+        font-size: 44px;
+        line-height: 1;
+    }
+
+    .catalog-body {
+        padding: 10px 25px 0;
+    }
+
+    .catalog-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    /* sem isso a faixa de categorias "estica" a página no celular */
+    .catalog-controls > * {
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .catalog-cats {
+        flex-wrap: nowrap;
+
+        padding-bottom: 6px;
+
+        overflow-x: auto;
+
+        scrollbar-width: none;
+    }
+
+    .catalog-cats a {
+        flex: 0 0 auto;
+    }
+
+    .catalog-search {
+        width: 100%;
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 36px 14px;
+    }
+
+    .product-name {
+        font-size: 12px;
+    }
+
+    .product-quick {
+        display: none;
+    }
+
+    /* reels ocupando a tela inteira */
+    .reels-frame {
+        width: 100%;
+        height: 100%;
+
+        aspect-ratio: auto;
+
+        border-radius: 0;
+    }
+
+    .reels-nav {
+        display: none;
+    }
+
+    .reel-name {
+        font-size: 20px;
+    }
+}

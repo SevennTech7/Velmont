@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
+    <title>VELMONT — Coleção</title>
+
+    <link rel="icon" type="image/png" href="images/logo.png">
+
+
+    <!-- =====================================================
+         GOOGLE FONTS
+    ====================================================== -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Gruppo&family=Anton&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- =====================================================
+         CSS (base do site + estilos desta página)
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="categoria.css"
+    >
+
+    <!-- menu com categorias + sacola -->
+
+    <link
+        rel="stylesheet"
+        href="loja.css"
+    >
+
+</head>
+
+
+<body class="is-loading catalog-page">
+
+
+<!-- =========================================================
+     HEADER / NAVBAR
+========================================================= -->
+
+<header class="header">
+
+    <a
+        href="index.html"
+        class="logo"
+        aria-label="VELMONT — início"
+    >
+
+        <img
+            src="images/logo.png"
+            alt=""
+        >
+
+        <span
+            class="logo-word"
+            id="logoWord"
+            aria-hidden="true"
+        >VELMONT</span>
+
+    </a>
+
+    <!-- as categorias e a sacola são montadas pelo loja.js -->
+
+    <nav
+        class="main-nav"
+        id="mainNav"
+        aria-label="Navegação principal"
+    ></nav>
+
+</header>
+
+
+<main class="catalog">
+
+
+    <!-- =====================================================
+         TOPO DA COLEÇÃO (cores da categoria)
+    ====================================================== -->
+
+    <section
+        class="catalog-hero"
+        id="catalogHero"
+    >
+
+        <a
+            class="back-link"
+            id="backLink"
+            href="index.html#categorias"
+        >
+            <span aria-hidden="true">←</span> VOLTAR
+        </a>
+
+        <span
+            class="catalog-eyebrow"
+            id="catalogEyebrow"
+        ></span>
+
+        <h1
+            class="catalog-title"
+            id="catalogTitle"
+        ></h1>
+
+        <p
+            class="catalog-tagline"
+            id="catalogTagline"
+        ></p>
+
+        <svg
+            class="catalog-wave"
+            viewBox="0 0 1440 160"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+        >
+            <path d="M0 120 C 420 40, 900 170, 1440 30 L1440 160 L0 160 Z" />
+        </svg>
+
+    </section>
+
+
+    <div class="catalog-body">
+
+
+        <!-- =================================================
+             CATEGORIAS (por nome) + BUSCA
+        ================================================== -->
+
+        <div class="catalog-controls">
+
+            <nav
+                class="catalog-cats"
+                id="catalogCats"
+                aria-label="Categorias"
+            ></nav>
+
+            <label class="catalog-search">
+
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5" />
+                    <path d="M15.5 15.5 21 21" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                </svg>
+
+                <span class="visually-hidden">Buscar peças</span>
+
+                <input
+                    type="search"
+                    id="catalogSearch"
+                    placeholder="Buscar peças, marcas…"
+                    autocomplete="off"
+                >
+
+            </label>
+
+        </div>
+
+
+        <!-- =================================================
+             FILTRO POR MARCA + CONTAGEM
+        ================================================== -->
+
+        <div class="catalog-toolbar">
+
+            <div
+                class="catalog-filters"
+                id="catalogFilters"
+                role="group"
+                aria-label="Filtrar por marca"
+            ></div>
+
+            <span
+                class="catalog-count"
+                id="catalogCount"
+                aria-live="polite"
+            ></span>
+
+        </div>
+
+
+        <!-- =================================================
+             GRADE DE PRODUTOS
+        ================================================== -->
+
+        <div
+            class="product-grid"
+            id="productGrid"
+        ></div>
+
+
+        <!-- SEM ITENS / SEM RESULTADOS -->
+
+        <div
+            class="catalog-empty"
+            id="catalogEmpty"
+            hidden
+        >
+
+            <strong id="emptyTitle">EM BREVE</strong>
+
+            <p id="emptyText">
+                Estamos selecionando as peças desta categoria.
+            </p>
+
+            <a
+                class="pill-button"
+                href="index.html#categorias"
+            >
+                VER OUTRAS CATEGORIAS
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- =========================================================
+     DETALHES ESTILO REELS
+     Feed vertical: rolar/arrastar passa para a próxima peça
+========================================================= -->
+
+<div
+    class="reels"
+    id="reels"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Detalhes das peças"
+    hidden
+>
+
+    <div
+        class="reels-backdrop"
+        data-close
+    ></div>
+
+    <div class="reels-frame">
+
+        <div class="reels-top">
+
+            <span
+                class="reels-count"
+                id="reelsCount"
+            ></span>
+
+            <button
+                class="reels-close"
+                type="button"
+                aria-label="Fechar"
+                data-close
+            >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+                </svg>
+            </button>
+
+        </div>
+
+        <div
+            class="reels-feed"
+            id="reelsFeed"
+        ></div>
+
+    </div>
+
+
+    <!-- setas (computador) -->
+
+    <div class="reels-nav">
+
+        <button
+            type="button"
+            id="reelsPrev"
+            aria-label="Peça anterior"
+        >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </button>
+
+        <button
+            type="button"
+            id="reelsNext"
+            aria-label="Próxima peça"
+        >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </button>
+
+    </div>
+
+    <div
+        class="reels-toast"
+        id="reelsToast"
+        role="status"
+        hidden
+    ></div>
+
+</div>
+
+
+<!-- =========================================================
+     RODAPÉ
+========================================================= -->
+
+<!-- conteúdo montado por loja.js (redes, endereço, mapa, partículas) -->
+
+<footer
+    class="site-footer"
+    id="contato"
+></footer>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script src="data/catalog.js"></script>
+<script src="loja.js"></script>
+<script src="categoria.js"></script>
+
+</body>
+
+</html>
