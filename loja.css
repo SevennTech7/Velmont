@@ -1,0 +1,1777 @@
+/* =====================================================
+   VELMONT — LOJA (compartilhado entre as páginas)
+   Menu com todas as categorias + sacola
+===================================================== */
+
+/* =====================================================
+   MENU DO TOPO
+===================================================== */
+
+.main-nav {
+    margin-left: auto;
+
+    gap: 26px;
+}
+
+.main-nav a.active {
+    color: #111;
+}
+
+.main-nav a.active::after {
+    width: 100%;
+}
+
+.header.on-dark .main-nav a.active,
+.catalog-page .header:not(.on-light) .main-nav a.active {
+    color: #fff;
+}
+
+/* =====================================================
+   ÍCONE DA SACOLA
+===================================================== */
+
+.bag-button {
+    position: relative;
+
+    display: grid;
+    place-items: center;
+
+    width: 42px;
+    height: 42px;
+
+    margin-left: 26px;
+    padding: 0;
+
+    border: 1px solid rgba(17, 17, 17, 0.18);
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.35);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+
+    color: #111;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.3s var(--ease-out),
+        border-color 0.3s ease,
+        color 0.3s ease,
+        background 0.3s ease;
+}
+
+.bag-button:hover {
+    transform: translateY(-2px);
+    border-color: currentColor;
+}
+
+.bag-button svg {
+    width: 20px;
+    height: 20px;
+}
+
+.header.on-dark .bag-button,
+.header.on-split .bag-button,
+.catalog-page .header:not(.on-light) .bag-button {
+    border-color: rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+}
+
+.bag-badge {
+    position: absolute;
+
+    right: -4px;
+    top: -4px;
+
+    min-width: 19px;
+    height: 19px;
+
+    padding: 0 5px;
+
+    border-radius: 999px;
+
+    background: #c8102e;
+    color: #fff;
+
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 19px;
+
+    text-align: center;
+}
+
+.bag-badge[hidden] {
+    display: none;
+}
+
+/* "pulo" ao adicionar um item */
+.bag-button.bump {
+    animation: bagBump 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes bagBump {
+    30% {
+        transform: scale(1.25) rotate(-8deg);
+    }
+
+    60% {
+        transform: scale(0.95) rotate(4deg);
+    }
+}
+
+/* =====================================================
+   PAINEL LATERAL
+===================================================== */
+
+.bag {
+    position: fixed;
+    inset: 0;
+
+    z-index: 3000;
+}
+
+.bag[hidden] {
+    display: none;
+}
+
+.bag-backdrop {
+    position: absolute;
+    inset: 0;
+
+    background: rgba(10, 10, 12, 0.5);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+
+    opacity: 0;
+
+    transition: opacity 0.4s ease;
+}
+
+.bag-panel {
+    position: absolute;
+
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    width: min(440px, 100vw);
+
+    background: #f8f7f4;
+    color: #111;
+
+    box-shadow: -30px 0 80px rgba(0, 0, 0, 0.25);
+
+    transform: translateX(100%);
+
+    transition: transform 0.45s var(--ease-out);
+}
+
+.bag.is-open .bag-backdrop {
+    opacity: 1;
+}
+
+.bag.is-open .bag-panel {
+    transform: none;
+}
+
+body.bag-open {
+    overflow: hidden;
+}
+
+.bag-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: calc(24px + env(safe-area-inset-top, 0px)) 28px 20px;
+
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.bag-head h2 {
+    font-size: 12px;
+    font-weight: 600;
+
+    letter-spacing: 4px;
+}
+
+.bag-head-count {
+    color: #8a867f;
+}
+
+.bag-icon-button {
+    display: grid;
+    place-items: center;
+
+    width: 38px;
+    height: 38px;
+
+    padding: 0;
+
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 50%;
+
+    background: #fff;
+    color: #111;
+
+    cursor: pointer;
+
+    transition: border-color 0.3s ease;
+}
+
+.bag-icon-button:hover {
+    border-color: #111;
+}
+
+.bag-icon-button svg {
+    width: 17px;
+    height: 17px;
+}
+
+/* =====================================================
+   ITENS
+===================================================== */
+
+.bag-items {
+    flex: 1;
+
+    overflow-y: auto;
+
+    list-style: none;
+
+    padding: 8px 28px;
+}
+
+.bag-item {
+    display: grid;
+    grid-template-columns: 92px 1fr auto;
+    align-items: start;
+
+    gap: 16px;
+
+    padding: 18px 0;
+
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+
+    animation: bagItemIn 0.45s var(--ease-out);
+}
+
+@keyframes bagItemIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+}
+
+.bag-thumb {
+    display: grid;
+    place-items: center;
+
+    width: 92px;
+    aspect-ratio: 4 / 5;
+
+    overflow: hidden;
+
+    border-radius: 8px;
+
+    background: #efede8;
+}
+
+.bag-thumb img {
+    width: 86%;
+    height: 86%;
+
+    object-fit: contain;
+}
+
+.bag-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 5px;
+
+    min-width: 0;
+}
+
+.bag-brand {
+    font-size: 8px;
+    letter-spacing: 3px;
+
+    color: #8a867f;
+}
+
+.bag-name {
+    font-size: 14px;
+    line-height: 1.3;
+}
+
+.bag-variant {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 7px;
+
+    font-size: 8px;
+    letter-spacing: 2px;
+
+    color: #555;
+}
+
+.bag-variant i {
+    width: 12px;
+    height: 12px;
+
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+}
+
+.bag-price-line {
+    font-size: 9px;
+    letter-spacing: 2px;
+
+    color: #555;
+}
+
+/* contador de quantidade */
+.bag-qty {
+    display: inline-flex;
+    align-items: center;
+
+    margin-top: 6px;
+
+    border: 1px solid rgba(0, 0, 0, 0.14);
+    border-radius: 999px;
+
+    background: #fff;
+}
+
+.bag-qty button {
+    width: 32px;
+    height: 30px;
+
+    padding: 0;
+
+    border: 0;
+    background: none;
+
+    font-size: 15px;
+
+    color: #111;
+
+    cursor: pointer;
+}
+
+.bag-qty span {
+    min-width: 22px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    text-align: center;
+}
+
+/* =====================================================
+   SACOLA VAZIA
+===================================================== */
+
+.bag-empty {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    padding: 40px 28px;
+
+    text-align: center;
+}
+
+.bag-empty[hidden] {
+    display: none;
+}
+
+.bag-empty-icon svg {
+    width: 52px;
+    height: 52px;
+
+    color: #c3bfb8;
+}
+
+.bag-empty strong {
+    font-size: 11px;
+    letter-spacing: 3px;
+}
+
+.bag-empty p {
+    max-width: 260px;
+
+    font-size: 13px;
+    line-height: 1.5;
+
+    color: #6f6b65;
+}
+
+.bag-link {
+    margin-top: 6px;
+
+    font-size: 9px;
+    letter-spacing: 3px;
+
+    color: #111;
+}
+
+/* =====================================================
+   RODAPÉ DA SACOLA
+===================================================== */
+
+.bag-foot {
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+
+    padding: 20px 28px calc(24px + env(safe-area-inset-bottom, 0px));
+
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+
+    background: #fff;
+}
+
+.bag-foot[hidden] {
+    display: none;
+}
+
+.bag-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    font-size: 9px;
+    letter-spacing: 3px;
+
+    color: #6f6b65;
+}
+
+.bag-summary[hidden] {
+    display: none;
+}
+
+.bag-summary strong {
+    font-size: 16px;
+    letter-spacing: 0;
+
+    color: #111;
+}
+
+.bag-whats {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    margin-top: 6px;
+    padding: 17px 20px;
+
+    border: 0;
+    border-radius: 999px;
+
+    background: #1f9d55;
+    color: #fff;
+
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 600;
+
+    letter-spacing: 2.5px;
+
+    cursor: pointer;
+
+    box-shadow: 0 14px 30px rgba(31, 157, 85, 0.3);
+
+    transition:
+        transform 0.3s var(--ease-out),
+        background 0.3s ease;
+}
+
+.bag-whats:hover {
+    background: #188a49;
+    transform: translateY(-2px);
+}
+
+.bag-whats svg {
+    width: 20px;
+    height: 20px;
+}
+
+.bag-clear {
+    padding: 6px;
+
+    border: 0;
+    background: none;
+
+    font-family: inherit;
+    font-size: 8px;
+
+    letter-spacing: 2.5px;
+
+    color: #8a867f;
+
+    cursor: pointer;
+}
+
+.bag-clear:hover {
+    color: #111;
+}
+
+.bag-note {
+    font-size: 11px;
+    line-height: 1.5;
+
+    text-align: center;
+
+    color: #8a867f;
+}
+
+/* =====================================================
+   AVISO "ADICIONADO À SACOLA"
+===================================================== */
+
+.bag-toast {
+    position: fixed;
+
+    left: 50%;
+    bottom: calc(28px + env(safe-area-inset-bottom, 0px));
+
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+
+    max-width: calc(100vw - 32px);
+
+    padding: 12px 12px 12px 22px;
+
+    border-radius: 999px;
+
+    background: #111;
+    color: #fff;
+
+    font-size: 10px;
+    letter-spacing: 1.5px;
+
+    translate: -50% 0;
+
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+
+    animation: bagToastIn 0.45s var(--ease-out);
+
+    z-index: 3100;
+}
+
+.bag-toast[hidden] {
+    display: none;
+}
+
+.bag-toast-text {
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+
+    min-width: 0;
+}
+
+.bag-toast strong {
+    overflow: hidden;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    letter-spacing: 0;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.bag-toast small {
+    font-size: 8px;
+    letter-spacing: 2px;
+
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.bag-toast button {
+    flex: 0 0 auto;
+
+    padding: 9px 14px;
+
+    border: 0;
+    border-radius: 999px;
+
+    background: #fff;
+    color: #111;
+
+    font-family: inherit;
+    font-size: 8px;
+    font-weight: 600;
+
+    letter-spacing: 2px;
+
+    cursor: pointer;
+}
+
+@keyframes bagToastIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
+/* =====================================================
+   MENU EM TELAS MENORES
+   Logo + sacola na primeira linha, categorias numa
+   faixa que rola para o lado
+===================================================== */
+
+@media (max-width: 1180px) {
+
+    .main-nav {
+        gap: 18px;
+    }
+
+    .main-nav a {
+        letter-spacing: 2px;
+    }
+}
+
+@media (max-width: 1000px) {
+
+    .header {
+        flex-wrap: wrap;
+        row-gap: 14px;
+
+        height: auto;
+    }
+
+    .logo {
+        order: 1;
+    }
+
+    .bag-button {
+        order: 2;
+
+        margin-left: auto;
+    }
+
+    .main-nav {
+        order: 3;
+
+        width: 100%;
+
+        margin-left: 0;
+        padding-bottom: 6px;
+
+        justify-content: flex-start;
+
+        overflow-x: auto;
+
+        scrollbar-width: none;
+
+        /* esmaece a borda direita: indica que dá para arrastar */
+        -webkit-mask-image: linear-gradient(to right, #000 85%, transparent);
+        mask-image: linear-gradient(to right, #000 85%, transparent);
+    }
+
+    .main-nav::-webkit-scrollbar {
+        display: none;
+    }
+
+    .main-nav a {
+        flex: 0 0 auto;
+    }
+}
+
+@media (max-width: 800px) {
+
+    .bag-button {
+        width: 38px;
+        height: 38px;
+    }
+
+    .bag-items {
+        padding: 4px 20px;
+    }
+
+    .bag-head,
+    .bag-foot {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .bag-item {
+        grid-template-columns: 78px 1fr auto;
+        gap: 12px;
+    }
+
+    .bag-thumb {
+        width: 78px;
+    }
+
+    /* menu legível no celular (antes 6–7px) */
+    .main-nav {
+        gap: 22px;
+    }
+
+    .main-nav a {
+        font-size: 9px;
+        letter-spacing: 2px;
+
+        padding: 4px 0;
+    }
+
+    .main-nav a::after {
+        bottom: 0;
+    }
+
+    /* aviso no topo: não cobre os botões dos reels nem o rodapé */
+    .bag-toast {
+        left: 12px;
+        right: 12px;
+        top: calc(12px + env(safe-area-inset-top, 0px));
+        bottom: auto;
+
+        justify-content: space-between;
+
+        max-width: none;
+
+        padding: 10px 10px 10px 18px;
+
+        border-radius: 16px;
+
+        translate: none;
+    }
+
+    /* nos reels, o aviso fica abaixo do contador e do X */
+    .reels-open .bag-toast {
+        top: calc(68px + env(safe-area-inset-top, 0px));
+    }
+
+    @keyframes bagToastIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+    }
+
+    /* HEADER AO ROLAR
+       barra com fundo (o conteúdo não passa "por baixo" do texto)
+       e que some ao descer / volta ao subir */
+    .header {
+        transition:
+            transform 0.45s var(--ease-out),
+            background-color 0.35s ease,
+            padding 0.35s ease,
+            top 0.35s ease,
+            box-shadow 0.35s ease;
+    }
+
+    .header.is-solid {
+        top: 0;
+
+        padding-top: calc(10px + env(safe-area-inset-top, 0px));
+        padding-bottom: 10px;
+
+        background: rgba(248, 247, 244, 0.9);
+        -webkit-backdrop-filter: blur(14px) saturate(1.2);
+        backdrop-filter: blur(14px) saturate(1.2);
+
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+    }
+
+    /* versões escuras da barra (sobre foto, rodapé e topo da categoria) */
+    .header.is-solid.on-dark,
+    .header.is-solid.over-footer,
+    .catalog-page .header.is-solid:not(.on-light) {
+        background: rgba(15, 15, 17, 0.72);
+
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+
+    .header.is-hidden {
+        transform: translateY(-110%);
+    }
+
+    .header.is-solid .logo img {
+        width: 40px;
+    }
+
+    /* página da categoria: só "INÍCIO", na mesma linha da sacola */
+    .catalog-page .main-nav {
+        order: 2;
+
+        width: auto;
+
+        margin-left: auto;
+        padding-bottom: 0;
+
+        overflow: visible;
+
+        -webkit-mask-image: none;
+        mask-image: none;
+    }
+
+    .catalog-page .bag-button {
+        order: 3;
+
+        margin-left: 18px;
+    }
+}
+
+/* =====================================================
+   MENU DO CELULAR (botão ☰ + tela cheia)
+===================================================== */
+
+.menu-button {
+    display: none;
+}
+
+.mobile-menu {
+    display: none;
+}
+
+@media (max-width: 800px) {
+
+    /* no celular a faixa de links dá lugar ao botão de menu */
+    body:not(.catalog-page) .main-nav {
+        display: none;
+    }
+
+    .menu-button {
+        order: 3;
+
+        position: relative;
+
+        display: grid;
+        place-items: center;
+
+        width: 38px;
+        height: 38px;
+
+        margin-left: 10px;
+        padding: 0;
+
+        border: 1px solid rgba(17, 17, 17, 0.18);
+        border-radius: 50%;
+
+        background: rgba(255, 255, 255, 0.35);
+        -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(8px);
+
+        color: #111;
+
+        cursor: pointer;
+
+        transition:
+            border-color 0.3s ease,
+            background 0.3s ease,
+            color 0.3s ease;
+    }
+
+    /* duas linhas que viram um X */
+    .menu-button span {
+        position: absolute;
+
+        left: 50%;
+        top: 50%;
+
+        width: 15px;
+        height: 1.5px;
+
+        margin-left: -7.5px;
+
+        border-radius: 2px;
+
+        background: currentColor;
+
+        transition: transform 0.45s var(--ease-out);
+    }
+
+    .menu-button span:first-child {
+        transform: translateY(-3.5px);
+    }
+
+    .menu-button span:last-child {
+        transform: translateY(3.5px);
+    }
+
+    .header.menu-active .menu-button span:first-child {
+        transform: rotate(45deg);
+    }
+
+    .header.menu-active .menu-button span:last-child {
+        transform: rotate(-45deg);
+    }
+
+    /* mesmas cores da sacola sobre fundos escuros */
+    .header.on-dark .menu-button,
+    .header.over-footer .menu-button,
+    .header.menu-active .menu-button {
+        border-color: rgba(255, 255, 255, 0.35);
+        background: rgba(255, 255, 255, 0.08);
+        color: #fff;
+    }
+
+    /* com o menu aberto, o header fica claro e sempre visível */
+    .header.menu-active {
+        transform: none;
+
+        background: transparent;
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+
+        box-shadow: none;
+    }
+
+    .header.menu-active .logo-word {
+        color: #f4f1ec;
+    }
+
+    .header.menu-active .bag-button {
+        border-color: rgba(255, 255, 255, 0.35);
+        background: rgba(255, 255, 255, 0.08);
+        color: #fff;
+    }
+
+    body.menu-open {
+        overflow: hidden;
+    }
+
+    .mobile-menu {
+        position: fixed;
+        inset: 0;
+
+        display: block;
+
+        overflow-y: auto;
+
+        background: #0f0f11;
+        color: #f4f1ec;
+
+        clip-path: circle(0 at calc(100% - 44px) 44px);
+
+        transition: clip-path 0.6s cubic-bezier(0.77, 0, 0.18, 1);
+
+        z-index: 999;
+    }
+
+    .mobile-menu[hidden] {
+        display: none;
+    }
+
+    .mobile-menu.is-open {
+        clip-path: circle(150% at calc(100% - 44px) 44px);
+    }
+
+    .mobile-menu-inner {
+        display: flex;
+        flex-direction: column;
+
+        min-height: 100%;
+
+        padding: calc(110px + env(safe-area-inset-top, 0px)) 25px calc(28px + env(safe-area-inset-bottom, 0px));
+    }
+
+    .mobile-menu-label {
+        margin-bottom: 10px;
+
+        font-size: 8px;
+        font-weight: 600;
+
+        letter-spacing: 4px;
+
+        color: rgba(244, 241, 236, 0.45);
+    }
+
+    .mobile-menu-list {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .mobile-menu-list a {
+        display: grid;
+        grid-template-columns: 34px 1fr 52px;
+        align-items: center;
+
+        gap: 12px;
+
+        min-height: 62px;
+        padding: 6px 0;
+
+        border-bottom: 1px solid rgba(244, 241, 236, 0.1);
+
+        color: #f4f1ec;
+
+        text-decoration: none;
+    }
+
+    .mobile-menu-num {
+        font-size: 9px;
+        font-weight: 600;
+
+        letter-spacing: 1px;
+
+        color: rgba(244, 241, 236, 0.45);
+    }
+
+    .mobile-menu-name {
+        font-size: 26px;
+        font-weight: 700;
+
+        letter-spacing: -0.02em;
+    }
+
+    .mobile-menu-list img {
+        width: 52px;
+        height: 46px;
+
+        border-radius: 8px;
+
+        object-fit: cover;
+    }
+
+    .mobile-menu-list a:active .mobile-menu-name {
+        color: rgba(244, 241, 236, 0.6);
+    }
+
+    .mobile-menu-foot {
+        display: flex;
+        flex-wrap: wrap;
+
+        gap: 10px 22px;
+
+        margin-top: auto;
+        padding-top: 34px;
+    }
+
+    .mobile-menu-foot a {
+        font-size: 9px;
+        font-weight: 600;
+
+        letter-spacing: 3px;
+
+        color: rgba(244, 241, 236, 0.7);
+
+        text-decoration: none;
+    }
+
+    /* itens entram em sequência */
+    .mobile-menu-list a,
+    .mobile-menu-foot {
+        opacity: 0;
+        transform: translateY(18px);
+
+        transition:
+            opacity 0.5s ease,
+            transform 0.6s var(--ease-out);
+    }
+
+    .mobile-menu.is-open .mobile-menu-list a,
+    .mobile-menu.is-open .mobile-menu-foot {
+        opacity: 1;
+        transform: none;
+
+        transition-delay: calc(0.18s + var(--i) * 0.045s);
+    }
+}
+
+@media (max-width: 800px) and (max-height: 700px) {
+
+    .mobile-menu-list a {
+        min-height: 52px;
+    }
+
+    .mobile-menu-name {
+        font-size: 22px;
+    }
+}
+
+/* =====================================================
+   RODAPÉ (montado por loja.js — igual em todas as páginas)
+   fundo escuro com onda no topo e as mesmas partículas
+   da abertura
+===================================================== */
+
+.site-footer {
+    --footer-bg: #0f0f11;
+
+    position: relative;
+
+    padding: 150px 6vw 34px;
+
+    overflow: hidden;
+
+    color: #f4f1ec;
+
+    isolation: isolate;
+
+    /* acima do fundo fixo da página inicial (canvas + véu) */
+    z-index: 20;
+}
+
+/* fundo escuro começa logo abaixo da onda */
+.site-footer::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    top: 118px;
+    bottom: 0;
+
+    background:
+        radial-gradient(ellipse 60% 50% at 75% 30%, rgba(255, 255, 255, 0.05), transparent 70%),
+        var(--footer-bg);
+
+    z-index: -2;
+}
+
+.footer-wave {
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 120px;
+
+    z-index: -2;
+}
+
+.footer-wave-front {
+    fill: var(--footer-bg);
+}
+
+.footer-wave-back {
+    fill: rgba(15, 15, 17, 0.35);
+}
+
+.footer-particles {
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+
+    /* as partículas só aparecem na parte escura */
+    -webkit-mask-image: linear-gradient(to bottom, transparent 90px, #000 170px);
+    mask-image: linear-gradient(to bottom, transparent 90px, #000 170px);
+
+    pointer-events: none;
+
+    z-index: -1;
+}
+
+.footer-inner {
+    position: relative;
+}
+
+/* header por cima do rodapé escuro (classe posta por loja.js) */
+body .header.over-footer .logo-word {
+    color: #f4f1ec;
+}
+
+body .header.over-footer .main-nav a {
+    color: rgba(244, 241, 236, 0.6);
+}
+
+body .header.over-footer .main-nav a:hover,
+body .header.over-footer .main-nav a.active {
+    color: #fff;
+}
+
+body .header.over-footer .main-nav a::after {
+    background: #fff;
+}
+
+body .header.over-footer .bag-button {
+    border-color: rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+}
+
+/* logo + nome no topo do rodapé */
+.footer-brandmark {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 16px;
+
+    color: #f4f1ec;
+
+    text-decoration: none;
+}
+
+.footer-brandmark img {
+    width: 54px;
+    height: 54px;
+
+    object-fit: contain;
+}
+
+.footer-brandmark span {
+    font-family: "Gruppo", sans-serif;
+    font-size: 24px;
+
+    letter-spacing: 8px;
+}
+
+/* colunas */
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.25fr;
+    align-items: start;
+
+    gap: 5vw;
+
+    margin-top: 56px;
+}
+
+.footer-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 18px;
+}
+
+.footer-label {
+    font-size: 8px;
+    font-weight: 600;
+
+    letter-spacing: 4px;
+
+    color: rgba(244, 241, 236, 0.45);
+}
+
+.footer-label-small {
+    margin-top: 8px;
+}
+
+.footer-lead {
+    max-width: 290px;
+
+    font-size: 15px;
+    line-height: 1.55;
+
+    color: rgba(244, 241, 236, 0.75);
+}
+
+/* WhatsApp + Instagram */
+.footer-social {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 10px;
+}
+
+.footer-social-link {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 11px 18px 11px 13px;
+
+    border: 1px solid rgba(244, 241, 236, 0.22);
+    border-radius: 999px;
+
+    font-size: 9px;
+    font-weight: 600;
+
+    letter-spacing: 2px;
+
+    color: #f4f1ec;
+
+    text-decoration: none;
+
+    transition:
+        transform 0.35s var(--ease-out),
+        background 0.35s ease,
+        border-color 0.35s ease;
+}
+
+.footer-social-link svg {
+    width: 22px;
+    height: 22px;
+}
+
+.footer-social-link:hover {
+    transform: translateY(-3px);
+
+    border-color: transparent;
+}
+
+.footer-social-link.is-whats:hover {
+    background: #1f9d55;
+}
+
+.footer-social-link.is-insta:hover {
+    background: linear-gradient(45deg, #f09433, #dc2743 50%, #bc1888);
+}
+
+/* endereço */
+.footer-place {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 12px;
+
+    color: #f4f1ec;
+
+    text-decoration: none;
+}
+
+.footer-place svg {
+    flex: 0 0 auto;
+
+    width: 22px;
+    height: 22px;
+
+    margin-top: 2px;
+
+    color: rgba(244, 241, 236, 0.7);
+}
+
+.footer-place strong {
+    display: block;
+
+    font-size: 17px;
+    font-weight: 500;
+
+    line-height: 1.35;
+}
+
+.footer-place small {
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 10px;
+    letter-spacing: 3px;
+
+    color: rgba(244, 241, 236, 0.55);
+}
+
+.footer-place:hover strong {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.footer-gps {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 8px;
+}
+
+.footer-gps a {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 9px 12px 9px 14px;
+
+    border: 1px solid rgba(244, 241, 236, 0.18);
+    border-radius: 999px;
+
+    font-size: 8px;
+    font-weight: 600;
+
+    letter-spacing: 1.5px;
+
+    color: rgba(244, 241, 236, 0.85);
+
+    text-decoration: none;
+
+    transition:
+        background 0.3s ease,
+        color 0.3s ease;
+}
+
+.footer-gps a svg {
+    width: 12px;
+    height: 12px;
+}
+
+.footer-gps a:hover {
+    background: #f4f1ec;
+    color: #111;
+}
+
+/* mini mapa (clicar abre a rota) */
+.footer-map {
+    position: relative;
+
+    display: block;
+
+    width: 100%;
+    aspect-ratio: 16 / 10;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(244, 241, 236, 0.14);
+    border-radius: 16px;
+
+    background: #1b1b1e;
+
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+}
+
+.footer-map iframe {
+    position: absolute;
+
+    left: -2px;
+    top: -80px;
+
+    width: calc(100% + 4px);
+    height: calc(100% + 160px);
+
+    border: 0;
+
+    /* mapa em tons escuros, combinando com o rodapé */
+    filter: grayscale(1) invert(0.9) contrast(0.9) brightness(0.95);
+
+    pointer-events: none;
+
+    transition: transform 0.8s var(--ease-out);
+}
+
+.footer-map:hover iframe {
+    transform: scale(1.04);
+}
+
+/* anel pulsando em volta do marcador do Google (a cabeça
+   do marcador fica ~26px acima do ponto exato) */
+.footer-map-pin {
+    position: absolute;
+
+    left: 50%;
+    top: calc(50% - 26px);
+
+    width: 16px;
+    height: 16px;
+
+    margin: -8px 0 0 -8px;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+.footer-map-pin i {
+    position: absolute;
+    inset: -12px;
+
+    border-radius: 50%;
+
+    border: 1px solid #f4f1ec;
+
+    animation: footerPin 2s ease-out infinite;
+}
+
+@keyframes footerPin {
+    from {
+        transform: scale(0.4);
+        opacity: 1;
+    }
+
+    to {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+.footer-map-cta {
+    position: absolute;
+
+    left: 14px;
+    bottom: 14px;
+
+    display: inline-flex;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 10px 16px 10px 12px;
+
+    border-radius: 999px;
+
+    background: #f4f1ec;
+    color: #111;
+
+    font-size: 8px;
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
+
+    transition: transform 0.35s var(--ease-out);
+}
+
+.footer-map-cta svg {
+    width: 16px;
+    height: 16px;
+}
+
+.footer-map:hover .footer-map-cta {
+    transform: translateY(-3px);
+}
+
+/* linha final */
+.footer-row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    gap: 16px;
+
+    margin-top: 70px;
+    padding-top: 22px;
+
+    border-top: 1px solid rgba(244, 241, 236, 0.12);
+
+    font-size: 8px;
+    letter-spacing: 3px;
+
+    color: rgba(244, 241, 236, 0.45);
+}
+
+.footer-top {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 6px;
+
+    color: inherit;
+
+    text-decoration: none;
+
+    transition: color 0.3s ease;
+}
+
+.footer-top svg {
+    width: 12px;
+    height: 12px;
+}
+
+.footer-top:hover {
+    color: #f4f1ec;
+}
+
+@media (max-width: 1000px) {
+
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .footer-map {
+        grid-column: 1 / -1;
+    }
+}
+
+/* CELULAR: uma coluna só, blocos separados por linhas finas,
+   botões com a mesma largura e tudo alinhado à mesma margem */
+@media (max-width: 640px) {
+
+    .site-footer {
+        padding: 104px 22px calc(26px + env(safe-area-inset-bottom, 0px));
+    }
+
+    .site-footer::before {
+        top: 78px;
+    }
+
+    .footer-wave {
+        height: 80px;
+    }
+
+    .footer-brandmark {
+        gap: 12px;
+    }
+
+    .footer-brandmark img {
+        width: 42px;
+        height: 42px;
+    }
+
+    .footer-brandmark span {
+        font-size: 19px;
+        letter-spacing: 6px;
+    }
+
+    /* coluna única; o bloco do endereço "abre" para o mapa
+       ficar entre o título e o endereço */
+    .footer-grid {
+        display: flex;
+        flex-direction: column;
+
+        gap: 0;
+
+        margin-top: 30px;
+    }
+
+    .footer-col {
+        gap: 0;
+    }
+
+    .footer-address {
+        display: contents;
+    }
+
+    .footer-brand {
+        padding-bottom: 32px;
+
+        border-bottom: 1px solid rgba(244, 241, 236, 0.1);
+    }
+
+    .footer-label {
+        margin-bottom: 14px;
+    }
+
+    .footer-lead {
+        max-width: none;
+
+        margin-bottom: 20px;
+
+        font-size: 14px;
+    }
+
+    .footer-social {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+
+        width: 100%;
+    }
+
+    .footer-social-link {
+        justify-content: center;
+
+        min-height: 48px;
+
+        padding: 12px 10px;
+    }
+
+    .footer-social-link span {
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .footer-address > .footer-label:first-child {
+        order: 1;
+
+        margin-top: 32px;
+    }
+
+    .footer-map {
+        order: 2;
+
+        aspect-ratio: 16 / 11;
+
+        margin-bottom: 18px;
+
+        border-radius: 14px;
+    }
+
+    .footer-place {
+        order: 3;
+
+        margin-bottom: 26px;
+    }
+
+    .footer-place strong {
+        font-size: 15px;
+    }
+
+    .footer-label-small {
+        order: 4;
+
+        margin-top: 0;
+    }
+
+    .footer-gps {
+        order: 5;
+
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+
+        gap: 8px;
+
+        width: 100%;
+    }
+
+    .footer-gps a {
+        justify-content: center;
+
+        min-height: 42px;
+
+        padding: 10px 4px;
+
+        font-size: 7.5px;
+        letter-spacing: 1px;
+
+        text-align: center;
+    }
+
+    .footer-gps a svg {
+        display: none;
+    }
+
+    .footer-row {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+
+        margin-top: 34px;
+        padding-top: 18px;
+    }
+
+    .footer-row-extra,
+    .footer-top span {
+        display: none;
+    }
+
+    /* "voltar ao topo" vira um botão redondo */
+    .footer-top {
+        display: grid;
+        place-items: center;
+
+        width: 40px;
+        height: 40px;
+
+        border: 1px solid rgba(244, 241, 236, 0.22);
+        border-radius: 50%;
+
+        color: #f4f1ec;
+    }
+
+    .footer-top svg {
+        width: 16px;
+        height: 16px;
+    }
+}

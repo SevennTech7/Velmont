@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>VELMONT — Fashion Archive</title>
+
+    <link rel="icon" type="image/png" href="images/logo.png">
+
+
+    <!-- =====================================================
+         GOOGLE FONTS
+    ====================================================== -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <!-- INTER -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- GRUPPO -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Gruppo&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- SIX CAPS (nome gigante da marca atrás das peças) -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Six+Caps&family=Anton&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- =====================================================
+         CSS
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <!-- menu com categorias + sacola -->
+
+    <link
+        rel="stylesheet"
+        href="loja.css"
+    >
+
+</head>
+
+
+<body class="is-loading">
+
+
+<!-- =========================================================
+     FUNDO FIXO
+     bg-layers → cor da parte clara (muda a cada coleção)
+     scene     → onda escura, fitas de seda e partículas
+========================================================= -->
+
+<div
+    class="bg-layers"
+    id="bgLayers"
+    aria-hidden="true"
+></div>
+
+<div
+    class="background-shape"
+    aria-hidden="true"
+></div>
+
+<!-- véu branco que cobre o fundo ao rolar para as categorias -->
+<div
+    class="veil"
+    aria-hidden="true"
+></div>
+
+<canvas
+    class="scene"
+    id="scene"
+    aria-hidden="true"
+></canvas>
+
+
+<!-- =========================================================
+     HEADER / NAVBAR
+========================================================= -->
+
+<header class="header">
+
+
+    <!-- LOGO + NOME -->
+
+    <a
+        href="#"
+        class="logo"
+        aria-label="VELMONT"
+    >
+
+        <img
+            src="images/logo.png"
+            alt=""
+        >
+
+        <span
+            class="logo-word"
+            id="logoWord"
+            aria-hidden="true"
+        >VELMONT</span>
+
+    </a>
+
+
+    <!-- NAVBAR: as categorias e a sacola são montadas pelo loja.js -->
+
+    <nav
+        class="main-nav"
+        id="mainNav"
+        aria-label="Navegação principal"
+    ></nav>
+
+</header>
+
+
+<main>
+
+
+<!-- =========================================================
+     PRIMEIRA SEÇÃO (fica presa enquanto a onda sobe no scroll)
+========================================================= -->
+
+<div
+    class="hero-scroll"
+    id="heroScroll"
+>
+
+<section class="site">
+
+
+    <!-- =====================================================
+         INTRO
+    ====================================================== -->
+
+    <div class="intro">
+
+        <span class="intro-eyebrow">
+            SELECTED COLLECTION
+        </span>
+
+        <h1>
+            <span class="line-mask"><span class="line-inner">DESIGN</span></span>
+            <span class="line-mask"><span class="line-inner">BRANDS</span></span>
+        </h1>
+
+    </div>
+
+
+    <!-- =====================================================
+         ARARA
+    ====================================================== -->
+
+    <div
+        class="rack-scene"
+        id="rackScene"
+    >
+
+
+        <!-- ÁREA DAS ROUPAS -->
+
+        <div
+            class="clothes-window"
+            id="clothesWindow"
+        >
+
+            <div
+                class="clothes-track"
+                id="clothesTrack"
+            ></div>
+
+        </div>
+
+
+        <!-- ARARA -->
+
+        <div class="rack">
+
+            <div class="rack-bar"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         ÁREA INFERIOR
+    ====================================================== -->
+
+    <div class="bottom">
+
+
+        <!-- CONTADOR -->
+
+        <div class="collection-counter">
+
+            <span id="current">
+                01
+            </span>
+
+            <span class="line"></span>
+
+            <span>
+                03
+            </span>
+
+        </div>
+
+
+        <!-- INSTRUÇÃO + INDICADOR DE SCROLL -->
+
+        <div class="instruction">
+
+            <span>DRAG TO EXPLORE</span>
+
+            <span class="scroll-cue"></span>
+
+        </div>
+
+
+        <!-- =================================================
+             SÍMBOLOS DAS MARCAS
+        ================================================== -->
+
+        <nav
+            class="brand-symbols"
+            id="brands"
+            aria-label="Selecionar coleção"
+        >
+
+
+            <!-- CASA BLANCA -->
+
+            <button
+                class="brand-symbol active"
+                data-index="0"
+                type="button"
+                aria-label="Casa Blanca"
+            >
+
+                <span class="symbol-cb">
+                    CB
+                </span>
+
+            </button>
+
+
+            <!-- LOUIS VUITTON -->
+
+            <button
+                class="brand-symbol"
+                data-index="1"
+                type="button"
+                aria-label="Louis Vuitton"
+            >
+
+                <span class="symbol-lv">
+                    LV
+                </span>
+
+            </button>
+
+
+            <!-- LACOSTE -->
+
+            <button
+                class="brand-symbol"
+                data-index="2"
+                type="button"
+                aria-label="Lacoste"
+            >
+
+                <span class="symbol-lacoste">
+                    L
+                </span>
+
+            </button>
+
+        </nav>
+
+    </div>
+
+</section>
+
+</div>
+
+
+<!-- =========================================================
+     SEGUNDA SEÇÃO — VITRINE DE CATEGORIAS
+     A vitrine fica presa na tela enquanto o scroll passa
+     pelas categorias. O conteúdo vem de data/catalog.js
+========================================================= -->
+
+<section
+    class="showcase-scroll"
+    id="categorias"
+    aria-label="Categorias"
+>
+
+    <div
+        class="showcase"
+        id="showcase"
+    >
+
+        <!-- FOTO (direita). As cenas são montadas pelo JS;
+             na troca, a foto nova entra em faixas verticais -->
+
+        <div
+            class="sc-photo-area"
+            id="scPhoto"
+            aria-hidden="true"
+        ></div>
+
+
+        <!-- NOME VERTICAL (metade no painel branco, metade na foto) -->
+
+        <div
+            class="sc-word"
+            id="scWord"
+            aria-hidden="true"
+        >
+            <span class="sc-word-copy sc-word-dark"><span class="sc-word-text"></span></span>
+            <span class="sc-word-copy sc-word-light"><span class="sc-word-text"></span></span>
+        </div>
+
+
+        <!-- PAINEL BRANCO (esquerda) -->
+
+        <aside class="sc-panel">
+
+            <div class="sc-next">
+
+                <span class="sc-next-label">Próxima</span>
+
+                <button
+                    class="sc-next-card"
+                    id="scNext"
+                    type="button"
+                >
+                    <span
+                        class="sc-next-media"
+                        id="scNextMedia"
+                    ></span>
+
+                    <span
+                        class="sc-next-name"
+                        id="scNextName"
+                    ></span>
+                </button>
+
+            </div>
+
+            <div class="sc-info">
+
+                <h2
+                    class="sc-title"
+                    id="scTitle"
+                ></h2>
+
+                <p
+                    class="sc-tagline"
+                    id="scTagline"
+                ></p>
+
+                <span
+                    class="sc-meta"
+                    id="scMeta"
+                ></span>
+
+                <a
+                    class="sc-explore"
+                    id="scExplore"
+                    href="categoria.html"
+                >
+                    EXPLORAR COLEÇÃO
+
+                    <svg viewBox="0 0 32 12" aria-hidden="true">
+                        <path d="M0 6h30M25 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.2" />
+                    </svg>
+                </a>
+
+            </div>
+
+            <div
+                class="sc-index"
+                aria-hidden="true"
+            >
+                <strong id="scIndex">01</strong>
+                <span id="scTotal">/07</span>
+            </div>
+
+        </aside>
+
+
+        <!-- PEÇAS DA CATEGORIA (canto inferior direito) -->
+
+        <div
+            class="sc-products"
+            id="scProducts"
+        ></div>
+
+
+        <!-- SELETOR DE CATEGORIA -->
+
+        <div
+            class="sc-dots"
+            id="scCards"
+            role="tablist"
+            aria-label="Escolher categoria"
+        ></div>
+
+
+        <!-- DICA DE SCROLL -->
+
+        <div
+            class="sc-hint"
+            id="scHint"
+        >
+            <span
+                class="sc-mouse"
+                aria-hidden="true"
+            ></span>
+
+            <span id="scHintText">ROLE PARA BAIXO</span>
+        </div>
+
+
+        <!-- CRÉDITO DA IMAGEM (exigido pela licença CC BY) -->
+
+        <span
+            class="sc-credit"
+            id="scCredit"
+        ></span>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     RODAPÉ
+========================================================= -->
+
+<!-- conteúdo montado por loja.js (redes, endereço, mapa, partículas) -->
+
+<footer
+    class="site-footer"
+    id="contato"
+></footer>
+
+</main>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script src="data/catalog.js"></script>
+<script src="loja.js"></script>
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
